@@ -81,3 +81,15 @@ the dataset was collected from Singapore
 9. **Model Saving and Loading:**
    - The finalized models are saved as pickle files for future use.
    - The saved models are loaded to verify their correctness.
+
+# Conclusion
+
+The **Build It Right** application presents a comprehensive approach to improving energy efficiency in buildings through predictive modeling and recommendations. By leveraging housing data, the application predicts heating and cooling loads using various machine learning techniques. 
+
+The dataset, sourced from Singapore, provides key insights into building characteristics and energy consumption patterns. With 14 informative columns, including dimensions, orientation, and load requirements, it offers a robust foundation for analysis.
+
+The model overview outlines a structured methodology, from data preprocessing to model evaluation and selection. Notably, the incorporation of exploratory data analysis, feature scaling, and predictive modeling techniques ensures a holistic understanding and accurate predictions of energy loads.
+
+Furthermore, the application demonstrates versatility through the utilization of both traditional regression models and automated machine learning (AutoML) with PyCaret. This approach not only enhances prediction accuracy but also streamlines the modeling process, making it accessible to users with varying levels of expertise.
+
+Overall, **Build It Right** stands as a valuable tool for individuals and organizations seeking to optimize energy efficiency in building design and operation. Through data-driven insights and actionable recommendations, it empowers users to make informed decisions towards sustainable and eco-friendly practices.
