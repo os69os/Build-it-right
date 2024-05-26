@@ -2,6 +2,16 @@
 
 Welcome to **Build It Right**, an application designed to help you improve your energy efficiency. This tool allows you to input various parameters related to your house design and provides recommendations to improve energy efficiency based on predicted cooling and heating loads.
 
+## Installation
+
+Clone repo and install requirements.txt
+
+```bash
+git clone https://github.com/os69os/T5-capstone.git  # clone
+cd T5-capstone
+pip install -r requirements.txt  # install
+```
+
 ## Features
 
 - Input house dimensions and design features
@@ -32,12 +42,4 @@ the dataset was collected from Singapore
   - Shape_O: the building shape
   - Shape_U: the building shape
 
-## Installation
 
-Clone repo and install requirements.txt
-
-```bash
-git clone https://github.com/os69os/T5-capstone.git  # clone
-cd T5-capstone
-pip install -r requirements.txt  # install
-```
