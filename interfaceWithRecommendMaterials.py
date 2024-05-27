@@ -307,7 +307,7 @@ def main():
                     with tabs[0]:
                         st.subheader("Best Material efficiency Details")
                         st.markdown(f"**Material:** {best_material['Material']}")
-                        st.markdown(f"**Installation Cost:** ${best_material_cost:.2f}")
+                        st.markdown(f"**Installation Cost For Walls:** ${best_material_cost:.2f}")
                         st.markdown(f"**Applications:** {best_material['Applications']}")
                         st.markdown(f"**Additional Info:** {best_material['Additional_info']}")
                         st.markdown(f"**Installation Time:** {best_material['Installation_Time']}")
@@ -322,7 +322,7 @@ def main():
                     with tabs[1]:
                         st.subheader("Best Material Cost Details")
                         st.markdown(f"**Material:** {best_cost_material['Material']}")
-                        st.markdown(f"**Installation Cost:** ${best_cost_material_cost:.2f}")
+                        st.markdown(f"**Installation Cost For Walls:** ${best_cost_material_cost:.2f}")
                         st.markdown(f"**Applications:** {best_cost_material['Applications']}")
                         st.markdown(f"**Additional Info:** {best_cost_material['Additional_info']}")
                         st.markdown(f"**Installation Time:** {best_cost_material['Installation_Time']}")
