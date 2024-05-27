@@ -26,7 +26,7 @@ the dataset was collected from Singapore
 ## Key Details:
 
 - Total Entries: The dataset contains 15357 entries, each representing a building.
-- Columns: There are 14 columns in the dataset:
+- Columns: There are 17 columns in the dataset:
   - Width: building Width
   - Length: building Length
   - Height: building Height
@@ -34,7 +34,10 @@ the dataset was collected from Singapore
   - Window_Ratio: the percentage of windows in the building
   - Skylight_Ratio: the percentage of the light penetration from upper canopy above the open space
   - Area: building area
+  - Court_Length: Court Length
+  - Court_Width: Width of the court
   - Form_Factor: shape of the building block as a 3D block
+  - Surface_Volume_Ratio: An adjective that reflects the shape of a building block
   - Cooling_Load: the load required during a year for cooling
   - Heating_Load:	the load required during a year for heating
   - Shape_Box: the building shape
