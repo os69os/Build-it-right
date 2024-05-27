@@ -27,23 +27,24 @@ the dataset was collected from Singapore
 
 - Total Entries: The dataset contains 15357 entries, each representing a building.
 - Columns: There are 17 columns in the dataset:
-  - Width: building Width
-  - Length: building Length
-  - Height: building Height
-  - Orientation: the orientation of the building is measured at an angle that rotates clockwise from the north
-  - Window_Ratio: the percentage of windows in the building
-  - Skylight_Ratio: the percentage of the light penetration from upper canopy above the open space
-  - Area: building area
-  - Court_Length: Court Length
-  - Court_Width: Width of the court
-  - Form_Factor: shape of the building block as a 3D block
-  - Surface_Volume_Ratio: An adjective that reflects the shape of a building block
-  - Cooling_Load: the load required during a year for cooling
-  - Heating_Load:	the load required during a year for heating
-  - Shape_Box: the building shape
-  - Shape_L: the building shape
-  - Shape_O: the building shape
-  - Shape_U: the building shape
+  - Width: building Width.
+  - Length: building Length.
+  - Height: building Height.
+  - Orientation: the orientation of the building is measured at an angle that rotates clockwise from the north.
+  - Window_Ratio: the percentage of windows in the building.
+  - Skylight_Ratio: the percentage of the light penetration from upper canopy above the open space.
+  - Area: building area.
+  - Court_Length: Court Length.
+  - Court_Width: Width of the court.
+  - Form_Factor: A calculated value representing the shape of the house, considering its dimensions.
+  - Surface_Volume_Ratio: The ratio of the house's surface area to its volume, indicating compactness.
+  - Cooling_Load: The cooling load required to maintain a comfortable indoor temperature.
+  - Heating_Load: The heating load required to maintain a comfortable indoor temperature.
+  - Total_Load: The total energy load (cooling + heating) required to maintain a comfortable indoor temperature, represented as a float value.
+  - Shape_Box: the building shape.
+  - Shape_L: the building shape.
+  - Shape_O: the building shape.
+  - Shape_U: the building shape.
 
 # Model Overview
 
@@ -76,7 +77,7 @@ the dataset was collected from Singapore
 7. **AutoML (Automated Machine Learning):**
    - PyCaret library is used for automating the machine learning workflow for predicting Heating Load and Cooling Load separately.
    - Models are compared, tuned, and finalized using PyCaret's functionalities.
-   - The final models are saved for both Heating Load and Cooling Load prediction tasks.
+   - The final model 'LightGBM' was saved for both Heating Load and Cooling Load prediction tasks.
 
 8. **Learning Curves:**
    - Learning curves are plotted to visualize the performance of the finalized models for both Heating Load and Cooling Load prediction.
