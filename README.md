@@ -7,8 +7,8 @@ Welcome to **Build It Right**, an application designed to help you improve your 
 Clone repo and install requirements.txt
 
 ```bash
-git clone https://github.com/os69os/T5-capstone.git  # clone
-cd T5-capstone
+git clone https://github.com/os69os/Build-it-right.git  # clone
+cd Build-it-right
 pip install -r requirements.txt  # install
 ```
 
