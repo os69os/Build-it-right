@@ -6,8 +6,18 @@ import numpy as np
 import plotly.graph_objects as go
 
 # Load the dataset
-file_path = 'Houses_data.csv'  # Adjust the path to your dataset
+file_path = 'Houses_data_cleaned.csv'  # Adjust the path to your dataset
 data = pd.read_csv(file_path)
+
+# Load materials dataset
+materials_file_path = 'new materials v1.0.xlsx'  # Adjust the path to your materials dataset
+materials = pd.read_excel(materials_file_path)
+
+# Constants for normalization (these should be based on your dataset or domain knowledge)
+MAX_COOLING_LOAD = 50.36  # Example value, replace with actual max value if available
+MIN_COOLING_LOAD = 42.31    # Example value, replace with actual min value if available
+MAX_HEATING_LOAD = 1.80   # Example value, replace with actual max value if available
+MIN_HEATING_LOAD = 0.29    # Example value, replace with actual min value if available
 
 # Function to add a background image with a dark overlay
 def add_bg_from_local(image_file):
@@ -54,6 +64,9 @@ def add_bg_from_local(image_file):
         .total {{
             color: darkgreen;
         }}
+        .efficiency {{
+            color: darkorange;
+        }}
         </style>
         """,
         unsafe_allow_html=True
@@ -72,9 +85,9 @@ def load_model_pycaret(file_path):
 def calculate_form_factor_and_area(length, width, height):
     if length == 0 or width == 0 or height == 0:
         return 0, 0  # Avoid division by zero by returning 0 for area and form factor
-    area = length * width
-    volume = length * width * height
-    surface_area = 2 * (length * width + length * height + width * height)
+    area = 10.764*length * 10.764*width
+    volume = 10.764*length *10.764* width *10.764* height
+    surface_area = 2 * (10.764*length *10.764* width +10.764* length *10.764* height +10.764* width *10.764* height)
     form_factor = volume / surface_area
     return area, form_factor
 
@@ -128,16 +141,60 @@ def get_user_inputs():
         **shape_features
     }
 
-# Function to recommend materials based on loads
-def recommend_materials(cooling_load, heating_load):
-    recommendations = []
-    if cooling_load > 45.33:  # 75th percentile
-        recommendations.append("Use reflective roof coatings to reduce heat absorption.")
-    if heating_load > 1.24:  # 75th percentile
-        recommendations.append("Consider using high-quality wall insulation to retain heat.")
-    if cooling_load <= 45.33 and heating_load <= 1.24:
-        recommendations.append("Your house design is efficient. Maintain good ventilation and consider using energy-efficient windows.")
-    return recommendations
+# Function to calculate house efficiency based on cooling and heating loads using max and min normalization
+def calculate_house_efficiency(cooling_load, heating_load):
+    normalized_cooling_load = (cooling_load - MIN_COOLING_LOAD) / (MAX_COOLING_LOAD - MIN_COOLING_LOAD)
+    normalized_heating_load = (heating_load - MIN_HEATING_LOAD) / (MAX_HEATING_LOAD - MIN_HEATING_LOAD)
+    efficiency = 100 * (1 - (0.9 * normalized_cooling_load + 0.1 * normalized_heating_load))
+    Loss = (100-(max(min(efficiency, 100), 0)))  # Ensure efficiency is between 0 and 100
+    return Loss
+
+
+# Function to recommend materials based on house efficiency and loads
+def recommend_materials(house_efficiency, cooling_load, heating_load):
+    if house_efficiency > 80:
+        # Return the two most effective materials for consistency
+        best_materials = materials.nlargest(2, 'Effectiveness_per')
+        return best_materials.iloc[0], best_materials.iloc[1]
+
+    type_insulated = "Cooling" if heating_load > cooling_load else "Heating"
+    
+    if house_efficiency < 30:
+        effectiveness_range = (90, 100)
+    elif 30 <= house_efficiency <= 65:
+        effectiveness_range = (81, 90)
+    else:
+        effectiveness_range = (70, 80)
+    
+    # Filter materials
+    suitable_materials = materials[
+        (materials['Effectiveness_per'] >= effectiveness_range[0]) &
+        (materials['Effectiveness_per'] <= effectiveness_range[1]) &
+        (materials['Type_Insulated'] == type_insulated)
+    ]
+
+    if not suitable_materials.empty:
+        best_material = suitable_materials.loc[suitable_materials['Effectiveness_per'].idxmax()]
+        best_cost_material = suitable_materials.loc[suitable_materials['Installation_Cost_$_sqft'].idxmin()]
+        return best_material, best_cost_material
+    else:
+        return None, None
+
+
+# Function to calculate installation cost based on house shape
+def calculate_installation_cost(height, length, width, shape, material_cost_per_sqft):
+    if shape == 'Box':
+        wall_areas = [height * length, height * width] * 2
+    elif shape == 'L':
+        wall_areas = [height * length, height * width, height * (length / 2), height * (width / 2)]
+    elif shape == 'O':
+        wall_areas = [height * length, height * width] * 4
+    elif shape == 'U':
+        wall_areas = [height * length] * 2 + [height * width] * 2 + [height * (length / 2)] * 4
+    
+    total_wall_area = sum(wall_areas)
+    installation_cost = total_wall_area * material_cost_per_sqft
+    return installation_cost
 
 # Main Streamlit app function
 def main():
@@ -174,6 +231,8 @@ def main():
                 heating_load = heating_prediction['prediction_label'][0]
                 total_energy = cooling_load + heating_load
 
+                house_efficiency = calculate_house_efficiency(cooling_load, heating_load)
+
                 st.markdown(
                     f"""
                     <div class="horizontal-values">
@@ -189,16 +248,40 @@ def main():
                             <h3>Total Energy</h3>
                             <p>{total_energy:.2f} kWh</p>
                         </div>
+                        <div class="value-box efficiency">
+                            <h3>House Loss</h3>
+                            <p>{house_efficiency:.2f} %</p>
+                        </div>
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
-                recommendations = recommend_materials(cooling_load, heating_load)
-                if recommendations:
-                    st.write("**Recommendations for Improving Energy Efficiency:**")
-                    for rec in recommendations:
-                        st.write(f"- {rec}")
+                recommended_materials = recommend_materials(house_efficiency, cooling_load, heating_load)
+
+                # Handle the case where only one material is recommended
+                if isinstance(recommended_materials, tuple):
+                    best_material, best_cost_material = recommended_materials
+
+                    # Calculate installation costs for the best material and the best cost material
+                    height, length, width = input_data['Height'], input_data['Length'], input_data['Width']
+                    shape = 'Box' if input_data['Shape_Box'] else 'L' if input_data['Shape_L'] else 'O' if input_data['Shape_O'] else 'U'
+
+                    best_material_cost = calculate_installation_cost(height, length, width, shape, best_material['Installation_Cost_$_sqft'])
+                    best_cost_material_cost = calculate_installation_cost(height, length, width, shape, best_cost_material['Installation_Cost_$_sqft'])
+
+                    st.write(f"**Best Material: {best_material['Material']}**, Installation Cost: ${best_material_cost:.2f}")
+                    st.write(f"**Best Cost Material: {best_cost_material['Material']}**, Installation Cost: ${best_cost_material_cost:.2f}")
+                else:
+                    best_material = recommended_materials
+
+                    # Calculate installation cost for the single best material
+                    height, length, width = input_data['Height'], input_data['Length'], input_data['Width']
+                    shape = 'Box' if input_data['Shape_Box'] else 'L' if input_data['Shape_L'] else 'O' if input_data['Shape_O'] else 'U'
+
+                    best_material_cost = calculate_installation_cost(height, length, width, shape, best_material['Installation_Cost_$_sqft'])
+
+                    st.write(f"**Recommended Material: {best_material['Material']}**, Installation Cost: ${best_material_cost:.2f}")
 
                 # Creating and displaying the area chart with specified colors
                 chart_data = pd.DataFrame({
@@ -223,6 +306,8 @@ def main():
                         - If the Heating Load is between 0.86 and 1.24 kWh, it indicates average energy consumption for heating.
                         
                         - The **Total Energy Consumption** is the sum of the cooling and heating loads, representing the overall energy required to maintain a comfortable temperature in your house.
+                        
+                        - The **House Efficiency** is calculated based on normalized cooling and heating loads using max and min values. A higher efficiency percentage indicates a more energy-efficient house.
                     ''')
 
             else:
