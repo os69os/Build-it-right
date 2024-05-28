@@ -12,6 +12,12 @@ cd Build-it-right
 pip install -r requirements.txt  # install
 ```
 
+To Run the streamlit app use this python command:
+
+```python
+streamlit run interface.py
+```
+
 ## Features
 
 - Input house dimensions and design features
@@ -38,6 +44,7 @@ The solution involves using a combination of traditional regression models and a
 ### Issues Faced and Improvements
 - **Data Quality:** Missing values in 'Skylight_Ratio' were filled with zeros, and categorical variables were converted into dummy variables.
 - **Outliers:** Handled using Box-Cox transformation and capping.
+- **Data Relevance:** The dataset used was not related to Saudi Arabia, which may affect the applicability of the predictions to buildings in that region.
 - **Model Selection:** Extensive hyperparameter tuning and model comparison ensured optimal performance.
 
 ## Model Section
