@@ -4,7 +4,7 @@ Welcome to **Build It Right**, an application designed to help you improve your 
 
 ## Installation
 
-Clone repo and install requirements.txt
+Clone the repo and install the requirements:
 
 ```bash
 git clone https://github.com/os69os/Build-it-right.git  # clone
@@ -19,81 +19,92 @@ pip install -r requirements.txt  # install
 - Provide recommendations to improve energy efficiency
 - Visualize energy loads and total energy consumption
 
-# Dataset overview
+## Problem Statement
 
-the dataset was collected from Singapore 
+Energy efficiency in buildings is crucial for reducing environmental impact and operational costs. Predicting energy loads and providing actionable recommendations can significantly enhance the design and functionality of buildings.
 
-## Key Details:
+## Project Scope and Objectives
 
-- Total Entries: The dataset contains 15357 entries, each representing a building.
-- Columns: There are 17 columns in the dataset:
-  - Width: building Width.
-  - Length: building Length.
-  - Height: building Height.
-  - Orientation: the orientation of the building is measured at an angle that rotates clockwise from the north.
-  - Window_Ratio: the percentage of windows in the building.
-  - Skylight_Ratio: the percentage of the light penetration from upper canopy above the open space.
-  - Area: building area.
-  - Court_Length: Court Length.
-  - Court_Width: Width of the court.
-  - Form_Factor: A calculated value representing the shape of the house, considering its dimensions.
-  - Surface_Volume_Ratio: The ratio of the house's surface area to its volume, indicating compactness.
-  - Cooling_Load: The cooling load required to maintain a comfortable indoor temperature.
-  - Heating_Load: The heating load required to maintain a comfortable indoor temperature.
-  - Total_Load: The total energy load (cooling + heating) required to maintain a comfortable indoor temperature, represented as a float value.
-  - Shape_Box: the building shape.
-  - Shape_L: the building shape.
-  - Shape_O: the building shape.
-  - Shape_U: the building shape.
+The project aims to develop a predictive model that analyzes various building parameters to forecast heating and cooling loads. The objectives include:
+- Building and validating multiple predictive models
+- Selecting the best-performing model
+- Integrating the model into an application that provides energy efficiency recommendations
 
-# Model Overview
+## Solution Outline
 
-1. **Introduction:**
-   The model aims to analyze housing data to predict heating and cooling loads. It employs various machine learning techniques to achieve this.
+### Overview of the Solution
+The solution involves using a combination of traditional regression models and automated machine learning (AutoML) to predict energy loads. PyCaret is utilized for its comprehensive AutoML capabilities, streamlining the modeling process. We chose this approach due to its efficiency in handling diverse datasets and producing accurate predictions.
 
-2. **Data Preprocessing:**
-   - The model imports necessary libraries (`pandas`, `numpy`, `seaborn`, `matplotlib.pyplot`) and reads the housing data from a CSV file into a Pandas DataFrame.
-   - Initial exploration of the dataset is performed with methods like `head()`, `shape`, `describe()`, and `info()` to understand its structure and contents.
-   - Unnecessary columns like 'Unnamed: 0', 'Image', 'ThreeD', and others are dropped from the DataFrame.
-   - Missing values in the 'Skylight_Ratio' column are filled with zeros.
-   - Categorical variables like 'Shape' are converted into dummy variables using one-hot encoding.
-   - Outliers in numeric features are detected and handled using techniques like Box-Cox transformation and capping.
+### Issues Faced and Improvements
+- **Data Quality:** Missing values in 'Skylight_Ratio' were filled with zeros, and categorical variables were converted into dummy variables.
+- **Outliers:** Handled using Box-Cox transformation and capping.
+- **Model Selection:** Extensive hyperparameter tuning and model comparison ensured optimal performance.
 
-3. **Exploratory Data Analysis (EDA):**
-   - Correlation analysis is performed using a heatmap to understand the relationships between variables.
+## Model Section
 
-4. **Feature Scaling:**
-   - Robust scaling is applied to features using `RobustScaler` from scikit-learn to handle varying ranges and outliers.
+### Models Tried
+- Linear Regression
+- Polynomial Regression
+- Decision Tree
+- Random Forest
+- Gradient Boosting
+- Support Vector Regression (SVR)
+- XGBoost
+- LightGBM (final model)
 
-5. **Predictive Models:**
-   - For predicting Total Load, various regression models including Linear Regression, Polynomial Regression, Decision Tree, Random Forest, Gradient Boosting, SVR, and XGBoost are trained and evaluated.
-   - Learning curves are plotted to visualize model performance and identify potential issues like overfitting or underfitting.
-   - Hyperparameter tuning is performed for Random Forest, Gradient Boosting, and XGBoost using techniques like GridSearchCV and RandomizedSearchCV.
+### Baseline Model
+The initial model was a simple Linear Regression, which provided a baseline performance to improve upon.
 
-6. **Model Evaluation and Selection:**
-   - Models are evaluated based on metrics like Mean Squared Error (MSE), Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), R-squared (R2), and Adjusted R-squared.
-   - The best-performing models are saved for future use.
+### Model Improvement
+Improvements were made by:
+- Applying robust feature scaling
+- Conducting extensive hyperparameter tuning
+- Using ensemble methods like Random Forest and Gradient Boosting
+- Leveraging AutoML with PyCaret for automated model optimization
 
-7. **AutoML (Automated Machine Learning):**
-   - PyCaret library is used for automating the machine learning workflow for predicting Heating Load and Cooling Load separately.
-   - Models are compared, tuned, and finalized using PyCaret's functionalities.
-   - The final model 'LightGBM' was saved for both Heating Load and Cooling Load prediction tasks.
+### Final Model Architecture
+The final model architecture for both heating and cooling load predictions is LightGBM, chosen for its high performance and efficiency.
 
-8. **Learning Curves:**
-   - Learning curves are plotted to visualize the performance of the finalized models for both Heating Load and Cooling Load prediction.
+## Dataset
 
-9. **Model Saving and Loading:**
-   - The finalized models are saved as pickle files for future use.
-   - The saved models are loaded to verify their correctness.
+### Description
+The dataset, sourced from Singapore, includes 15357 entries with 17 columns describing various building characteristics and energy loads.
 
-# Conclusion
+### Feature Engineering
+- One-hot encoding for categorical variables
+- Handling missing values and outliers
+- Creating new features like 'Form_Factor' and 'Surface_Volume_Ratio'
 
-The **Build It Right** application presents a comprehensive approach to improving energy efficiency in buildings through predictive modeling and recommendations. By leveraging housing data, the application predicts heating and cooling loads using various machine learning techniques. 
+### Issues and Augmentation
+- Missing values were imputed
+- No significant data augmentation was necessary
 
-The dataset, sourced from Singapore, provides key insights into building characteristics and energy consumption patterns. With 14 informative columns, including dimensions, orientation, and load requirements, it offers a robust foundation for analysis.
+## Training and Validation
 
-The model overview outlines a structured methodology, from data preprocessing to model evaluation and selection. Notably, the incorporation of exploratory data analysis, feature scaling, and predictive modeling techniques ensures a holistic understanding and accurate predictions of energy loads.
+### Final Model Performance
+The LightGBM model showed superior performance in predicting both heating and cooling loads.
 
-Furthermore, the application demonstrates versatility through the utilization of both traditional regression models and automated machine learning (AutoML) with PyCaret. This approach not only enhances prediction accuracy but also streamlines the modeling process, making it accessible to users with varying levels of expertise.
+### Evaluation Metrics
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- Mean Absolute Error (MAE)
+- R-squared (R2)
 
-Overall, **Build It Right** stands as a valuable tool for individuals and organizations seeking to optimize energy efficiency in building design and operation. Through data-driven insights and actionable recommendations, it empowers users to make informed decisions towards sustainable and eco-friendly practices.
+These metrics were chosen for their ability to provide a comprehensive understanding of the model's accuracy and reliability.
+
+## Demo
+
+### Final Product
+**Build It Right** provides an interface for users to input building parameters and receive detailed predictions and recommendations for improving energy efficiency. Visualizations help users understand energy loads and consumption patterns.
+
+## Future Work
+
+### Missing Elements
+- Integration of real-time data for continuous model improvement
+- Expansion to include more diverse datasets for broader applicability
+
+### Future Enhancements
+- Adding user feedback mechanisms to refine recommendations
+- Exploring additional machine learning techniques for even better performance
+
+By leveraging data-driven insights and advanced predictive modeling, **Build It Right** empowers users to make informed decisions towards sustainable building practices.
