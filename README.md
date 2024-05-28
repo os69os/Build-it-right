@@ -70,6 +70,29 @@ The final model architecture for both heating and cooling load predictions is Li
 ### Description
 The dataset, sourced from Singapore, includes 15357 entries with 17 columns describing various building characteristics and energy loads.
 
+### Key Details
+
+- Total Entries: The dataset contains 15357 entries, each representing a building.
+- Columns: There are 17 columns in the dataset:
+  - Width: building Width.
+  - Length: building Length.
+  - Height: building Height.
+  - Orientation: the orientation of the building is measured at an angle that rotates clockwise from the north.
+  - Window_Ratio: the percentage of windows in the building.
+  - Skylight_Ratio: the percentage of the light penetration from upper canopy above the open space.
+  - Area: building area.
+  - Court_Length: Court Length.
+  - Court_Width: Width of the court.
+  - Form_Factor: A calculated value representing the shape of the house, considering its dimensions.
+  - Surface_Volume_Ratio: The ratio of the house's surface area to its volume, indicating compactness.
+  - Cooling_Load: The cooling load required to maintain a comfortable indoor temperature.
+  - Heating_Load: The heating load required to maintain a comfortable indoor temperature.
+  - Total_Load: The total energy load (cooling + heating) required to maintain a comfortable indoor temperature, represented as a float value.
+  - Shape_Box: the building shape.
+  - Shape_L: the building shape.
+  - Shape_O: the building shape.
+  - Shape_U: the building shape.
+    
 ### Feature Engineering
 - One-hot encoding for categorical variables
 - Handling missing values and outliers
@@ -99,12 +122,11 @@ These metrics were chosen for their ability to provide a comprehensive understan
 
 ## Future Work
 
-### Missing Elements
-- Integration of real-time data for continuous model improvement
-- Expansion to include more diverse datasets for broader applicability
+### Data Expansion
+Collect more data to improve the accuracy and reliability of predictions.
 
 ### Future Enhancements
-- Adding user feedback mechanisms to refine recommendations
-- Exploring additional machine learning techniques for even better performance
+- Allow location input for tailored recommendations on house shape, orientation, and materials.
+- Incorporate environmental impact data to recommend the most sustainable materials.
 
 By leveraging data-driven insights and advanced predictive modeling, **Build It Right** empowers users to make informed decisions towards sustainable building practices.
