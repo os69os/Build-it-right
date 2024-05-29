@@ -104,7 +104,6 @@ Additionally, we have collected a material dataset detailing the effectiveness p
 ### Feature Engineering
 - One-hot encoding for categorical variables
 - Handling missing values and outliers
-- Creating new features like 'Form_Factor' and 'Surface_Volume_Ratio'
 
 ### Issues and Augmentation
 - Missing values were imputed
