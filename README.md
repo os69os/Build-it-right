@@ -126,6 +126,7 @@ These metrics were chosen for their ability to provide a comprehensive understan
 
 ### Final Product
 **Build It Right** provides an interface for users to input building parameters and receive detailed predictions and recommendations for improving energy efficiency. Visualizations help users understand energy loads and consumption patterns.
+**This website showcases "Build It Right," a comprehensive platform that assists users in designing energy-efficient homes. By leveraging AI technology, it provides predictions on heating and cooling loads, material recommendations to optimize home designs for reduced energy consumption. (https://builditright.mobirisesite.com/)
 
 ## Future Work
 
