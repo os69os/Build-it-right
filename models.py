@@ -34,14 +34,15 @@ def calculate_form_factor_and_area(length, width, height):
     form_factor = volume / surface_area
     return area, form_factor
 
-# Function to calculate house efficiency based on cooling and heating loads using max and min normalization
+# Function to calculate house Rating based on cooling and heating loads using max and min normalization
 def calculate_house_efficiency(cooling_load, heating_load):
     normalized_cooling_load = (cooling_load - MIN_COOLING_LOAD) / (MAX_COOLING_LOAD - MIN_COOLING_LOAD)
     normalized_heating_load = (heating_load - MIN_HEATING_LOAD) / (MAX_HEATING_LOAD - MIN_HEATING_LOAD)
     efficiency = 100 * (1 - (0.9 * normalized_cooling_load + 0.1 * normalized_heating_load))
     Loss = (100-(max(min(efficiency, 100), 0)))  # Ensure efficiency is between 0 and 100
     return Loss
-
+    
+# Function to suggest best recommend materials.# Function to suggest the best recommended materials.
 def recommend_materials(house_efficiency, cooling_load, heating_load):
     type_insulated = "Cooling" if heating_load > cooling_load else "Heating"
     
@@ -69,7 +70,8 @@ def recommend_materials(house_efficiency, cooling_load, heating_load):
         best_cost_material = None
     
     return best_material, best_cost_material
-
+    
+# Function to calculate installation cost based on the area of the user's house.
 def calculate_installation_cost(height, length, width, shape, material_cost_per_sqm):
     if shape == 'Box':
         wall_areas = [height * length, height * width] * 2
@@ -83,7 +85,7 @@ def calculate_installation_cost(height, length, width, shape, material_cost_per_
     total_wall_area = sum(wall_areas)
     installation_cost = int(total_wall_area * material_cost_per_sqm)
     return installation_cost
-
+# Function to calculate Maintenance cost based on the area of the user's house.
 def calculate_maintenance_cost(height, length, width, shape, material_maintenance_cost_per_sqm):
     if shape == 'Box':
         wall_areas = [height * length, height * width] * 2
@@ -97,7 +99,8 @@ def calculate_maintenance_cost(height, length, width, shape, material_maintenanc
     total_wall_area = sum(wall_areas)
     maintenance_cost = total_wall_area * material_maintenance_cost_per_sqm
     return maintenance_cost
-
+    
+# Function to display maintenance comparison.
 def plot_maintenance_costs(height, length, width, shape, materials):
     import plotly.graph_objects as go
     import streamlit as st  # type: ignore
