@@ -83,7 +83,7 @@ Additionally, we have collected a material dataset detailing the effectiveness p
 ### Key Details
 
 - Total Entries: The dataset contains 15357 entries, each representing a building.
-- Columns: There are 17 columns in the dataset:
+- Columns: There are 15 columns in the dataset:
   - Width: building Width.
   - Length: building Length.
   - Height: building Height.
@@ -98,10 +98,8 @@ Additionally, we have collected a material dataset detailing the effectiveness p
   - Cooling_Load: The cooling load required to maintain a comfortable indoor temperature.
   - Heating_Load: The heating load required to maintain a comfortable indoor temperature.
   - Total_Load: The total energy load (cooling + heating) required to maintain a comfortable indoor temperature, represented as a float value.
-  - Shape_Box: the building shape.
-  - Shape_L: the building shape.
-  - Shape_O: the building shape.
-  - Shape_U: the building shape.
+  - Shape: the building shape (Box, O, U, L).
+ 
     
 ### Feature Engineering
 - One-hot encoding for categorical variables
