@@ -12,7 +12,7 @@ Babel==2.15.0
 beautifulsoup4==4.12.3
 bleach==6.1.0
 blinker==1.8.2
-bpy==4.0.0
+bpy==4.1.0
 cachetools==5.3.3
 cadquery==2.4.0
 cadquery-ocp==7.7.0
