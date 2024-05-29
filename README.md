@@ -1,4 +1,4 @@
-# ![Build It Right](logo-removebg.png) 
+# ![Build It Right](logo2-removebg.png) 
 # Build It Right! (!ابنيها صح)
 
 Welcome to **Build It Right**, an application designed to help you improve your energy efficiency. This tool allows you to input various parameters related to your house design and provides recommendations to improve energy efficiency based on predicted cooling and heating loads.
