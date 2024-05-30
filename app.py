@@ -122,9 +122,9 @@ def get_user_inputs():
     """, 
     unsafe_allow_html=True
 )
-    length = st.sidebar.number_input('House Length (m):', min_value=0.1, value=1.0)
-    width = st.sidebar.number_input('House Width (m):', min_value=0.1, value=1.0)
-    height = st.sidebar.number_input('House Height (m):', min_value=0.1, value=1.0)
+    length = st.sidebar.number_input('House Length (m):', min_value=0.1, value=65.0)
+    width = st.sidebar.number_input('House Width (m):', min_value=0.1, value=87.0)
+    height = st.sidebar.number_input('House Height (m):', min_value=0.1, value=9.0)
 
     area, form_factor = calculate_form_factor_and_area(length, width, height)
 
@@ -254,7 +254,7 @@ def main():
                                 best_material['Installation_Time'], 
                                 best_material['Lifespan']
                             ],
-                            'Best Cost Material)': [
+                            'Best Cost Material': [
                                 best_cost_material['Material'], 
                                 f"{best_cost_material_cost:.2f}", 
                                 best_cost_material['Applications'], 
