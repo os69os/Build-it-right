@@ -76,7 +76,7 @@ The final model architecture for both heating and cooling load predictions is Li
 ## Dataset
 
 ### Description
-This dataset, sourced from a private source in Singapore, includes 15,357 entries with 15 columns describing various building characteristics and energy loads. Special thanks to Dr. Asma Alshargabi and Abdulbasid Almhady for providing the data.
+This dataset, sourced from a private source in Singapore, includes 15,357 entries with 15 columns describing various building characteristics and energy loads. Special thanks to Dr. Asma Alshargabi and Abdulbasid AlMahfadi for providing the data.
 
 Additionally, we have collected a material dataset detailing the effectiveness percentages, applications, costs, and other characteristics of various insulation materials.
 
